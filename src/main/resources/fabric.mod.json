@@ -16,10 +16,14 @@
 	"entrypoints": {
 		"main": [
 			"com.luxof.remilia.Remilia"
+		],
+		"client": [
+			"com.luxof.remilia.client.RemiliaClient"
 		]
 	},
 	"mixins": [
-		"remilia.mixins.json"
+		"remilia.mixins.json",
+		"remilia_examples.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",

@@ -1,6 +1,7 @@
 {
     "macros": {
         "$(exampleblue)": "$(#0000ff)",
-        "$(rainbowClient)": "$(#000000)"
+        "$(rainbowClient)": "$(#000000)",
+        "$(discoServer)": "$(#000000)"
     }
 }

@@ -1,13 +1,15 @@
 {
 	"required": true,
-	"package": "com.luxof.remilia.mixin",
+	"package": "com.luxof.remilia.examples.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"MinecraftServerMixin"
+		"ClientWorldMixin",
+		"ServerWorldMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
 	},
+	"plugin": "com.luxof.remilia.mixin.examples.OnlyDevEnvMCP",
 	"overwrites": {
 		"requireAnnotations": true
 	}
