@@ -20,7 +20,7 @@ public class RemiliaClient implements ClientModInitializer {
                 int changes = packet.readInt();
 
                 for (int i = 0; i < changes; i++) {
-                    RemiliaAPI.INSTANCE.putMacro(packet.readString(), packet.readString());
+                    RemiliaAPI.Macros.put(packet.readString(), packet.readString());
                 }
             }
         );

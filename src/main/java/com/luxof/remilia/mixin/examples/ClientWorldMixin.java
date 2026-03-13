@@ -5,13 +5,13 @@ import com.luxof.remilia.RemiliaAPI;
 import java.util.HexFormat;
 import java.util.function.BooleanSupplier;
 
+import net.minecraft.client.world.ClientWorld;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import net.minecraft.client.world.ClientWorld;
 
 @Mixin(ClientWorld.class)
 public class ClientWorldMixin {
@@ -30,9 +30,9 @@ public class ClientWorldMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void remilia$rainbowMacro(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-        String macro = RemiliaAPI.INSTANCE.getMacro("$(rainbowClient)");
+        String macro = RemiliaAPI.Macros.get("$(rainbowClient)");
 
-        RemiliaAPI.INSTANCE.putMacro(
+        RemiliaAPI.Macros.put(
             "$(rainbowClient)",
             "$(" + pad((hex(macro) + 127) % 0xffffff) + ")"
         );

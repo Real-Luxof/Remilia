@@ -35,6 +35,6 @@ public class ServerWorldMixin {
         }
         timer = 0;
         coloridx++;
-        RemiliaAPI.INSTANCE.putMacro("$(discoServer)", colors[coloridx]);
+        RemiliaAPI.Macros.put("$(discoServer)", colors[coloridx]);
     }
 }
