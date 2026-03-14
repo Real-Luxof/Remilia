@@ -27,7 +27,7 @@ public class MinecraftClientMixin {
     private void remilia$shareVarsOnClient(CallbackInfo ci) {
         Remilia.shareVars(
             prevShared,
-            (uuid, id, packet) -> LOGGER.error("Client just tried to sync a variable to NON-NULL UUID " + uuid.toString() + ". What are you doing?"),
+            (uuid, id, packet) -> LOGGER.error("CLIENT just tried to sync a variable to NON-NULL UUID " + uuid.toString() + ". What are you doing?"),
             ClientPlayNetworking::send
         );
     }

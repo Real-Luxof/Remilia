@@ -36,7 +36,7 @@ public class Remilia implements ModInitializer {
 			FabricLoader.getInstance().isDevelopmentEnvironment()
 		);
 
-        RemiliaLoader.registerServer();
+        RemiliaServer.initializeServerSideStuff();
 	}
 
 	public static Identifier id(String name) { return new Identifier(MOD_ID, name); }
@@ -68,7 +68,7 @@ public class Remilia implements ModInitializer {
 	public static void shareVars(
 		HashMap<UUID, HashMap<String, Object>> prevShared,
 		TriConsumer<UUID, Identifier, PacketByteBuf> sendPacket,
-		BiConsumer<Identifier, PacketByteBuf> sendPacketToAll
+		BiConsumer<Identifier, PacketByteBuf> sendPacketToNull
 	) {
         HashMap<UUID, HashMap<String, Object>> changed = new HashMap<>();
         var nowShared = RemiliaAPI.Sharing.shared;
@@ -114,8 +114,8 @@ public class Remilia implements ModInitializer {
 
         for (UUID uuid : deletedUuids) {
             if (uuid == null) {
-				sendPacketToAll.accept(
-					id("your_global_just_got_deleted_buddy"),
+				sendPacketToNull.accept(
+					id("you_just_got_deleted_buddy"),
 					PacketByteBufs.empty()
 				);
                 continue;
@@ -134,7 +134,7 @@ public class Remilia implements ModInitializer {
             packet.writeCollection(entry.getValue(), (buf, str) -> buf.writeString(str));
 
             if (uuid == null) {
-				sendPacketToAll.accept(
+				sendPacketToNull.accept(
 					id("your_global_vars_just_got_deleted_buddy"),
 					packet
 				);
@@ -176,7 +176,7 @@ public class Remilia implements ModInitializer {
             }
 
             if (uuid == null) {
-				sendPacketToAll.accept(
+				sendPacketToNull.accept(
 					id("changed_global_vars"),
 					packet
 				);
@@ -190,4 +190,23 @@ public class Remilia implements ModInitializer {
             );
         }
 	}
+    
+
+    public static void readAndExecuteThisOnVars(
+        PacketByteBuf packet,
+        BiConsumer<String, Object> execute
+    ) {
+        while (packet.isReadable()) {
+            execute.accept(
+                packet.readString(),
+                switch (packet.readInt()) {
+                    case 0 -> packet.readInt();
+                    case 1 -> packet.readDouble();
+                    case 2 -> packet.readBoolean();
+                    case 3 -> packet.readString();
+                    default -> null;
+                }
+            );
+        }
+    }
 }
