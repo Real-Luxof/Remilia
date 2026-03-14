@@ -42,18 +42,18 @@ public class RemiliaAPI {
      * <p>when UUID for putX is null then the variable is global when on
      * the server, but directed to the server when on the client.
      * <p>persistent state is used to keep variables across logins.
-     * <p>conflicts log an error with the less recent one discarded.
+     * <p>conflicts are undefined behaviour. Don't Do That (trademark).
      * <p>the side that shares the variable is the one that updates it.
      * <p>every tick the values given by the suppliers of the current side's vars are checked.
      * if they have changed then an update packet is sent to the other side.
      * <p>any <code>Supplier</code>s received from here update automatically on that update packet.
      * Note that they return null if their variable doesn't exist
-     * (or it's value is a different type than it originally was).
+     * or it's value is a different type than it originally was.
      * <p>use cases: config, great spell discovered, etcetera. */
     public static class Sharing {
 
         // :devious:
-        public static HashMap<UUID, HashMap<String, Supplier<? extends Object>>> shared = new HashMap<>();
+        public static HashMap<UUID, HashMap<String, Supplier<Object>>> shared = new HashMap<>();
         public static HashMap<UUID, List<String>> ours = new HashMap<>();
 
         public static List<List<String>> getAllVarNames() {
@@ -92,7 +92,7 @@ public class RemiliaAPI {
         private static void put(UUID p, String n, Supplier<? extends Object> v) {
             if (!shared.containsKey(p))
                 shared.put(p, new HashMap<>());
-            shared.get(p).put(n, v);
+            shared.get(p).put(n, () -> v.get());
         }
         private static <T extends Object> Supplier<T> get(
             UUID p,

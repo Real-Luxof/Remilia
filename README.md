@@ -2,10 +2,10 @@
 
 Patchouli-Hex Casting addon that adds a bunch of niceties for players as well as mod developers.  
 WIP.  
-- Server-client synced variables. :x:
+- Server-client synced variables.
     - Used for macro or config flag syncing.
     - Example use case is modifying a multiplier for some spell's cost if the server config says so.
-- Macro injection into the Patchouli book. :x:
+- Macro injection into the Patchouli book.
 - Ancient Scrolls (or even just Scrolls) can be right-clicked to learn their stroke order in your book. :x:
 - Method-calling macros that give the given text as arguments to get back other text. :x:
 - $^(something) cancels ONLY $(something). :x:
