@@ -1,7 +1,5 @@
 package com.luxof.remilia;
 
-import com.luxof.remilia.client.RemiliaClientAPI;
-
 import static com.luxof.remilia.Remilia.LOGGER;
 
 import com.google.gson.JsonElement;

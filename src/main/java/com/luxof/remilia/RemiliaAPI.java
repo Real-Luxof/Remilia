@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 import org.jetbrains.annotations.NotNull;
 
 /** <p>Use after ClientPlayConnectionEvents.INIT or ServerPlayConnectionEvents.INIT. */
-public abstract class RemiliaAPI {
+public class RemiliaAPI {
     public final HashMap<String, String> macros;
 
     protected RemiliaAPI(HashMap<String, String> macros) { this.macros = macros; }
