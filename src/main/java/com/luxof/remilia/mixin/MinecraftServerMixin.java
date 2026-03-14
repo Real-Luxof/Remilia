@@ -39,7 +39,7 @@ public class MinecraftServerMixin {
 
         List<Map.Entry<String, String>> changes = new ArrayList<>();
         RemiliaAPI.Macros.all().entrySet().forEach(entry -> {
-            if (!prevMacros.get(entry.getKey()).equals(entry.getValue()))
+            if (!entry.getValue().equals(prevMacros.get(entry.getKey())))
                 changes.add(entry);
         });
 

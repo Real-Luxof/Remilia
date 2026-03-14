@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.NotNull;
 
-/** <p>Use after ClientPlayConnectionEvents.INIT or ServerPlayConnectionEvents.INIT. */
+/** <p>Use after assets have been loaded (so ingame works but not your initializer). */
 public class RemiliaAPI {
     public final HashMap<String, String> macros;
 
@@ -42,7 +42,7 @@ public class RemiliaAPI {
      * <p>when UUID for putX is null then the variable is global when on
      * the server, but directed to the server when on the client.
      * <p>persistent state is used to keep variables across logins.
-     * <p>conflicts are undefined behaviour. Don't Do That (trademark).
+     * <p>conflicts are undefined behaviour. Don't Do That™
      * <p>the side that shares the variable is the one that updates it.
      * <p>every tick the values given by the suppliers of the current side's vars are checked.
      * if they have changed then an update packet is sent to the other side.

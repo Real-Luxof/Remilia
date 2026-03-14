@@ -4,5 +4,5 @@
     "pages.remilia.remilia.static.title": "Static Macro",
     "pages.remilia.remilia.static.text": "This is an example of a macro originating from Remilia which never changes: 'exampleblue'.$(br2)$(exampleblue)This is it in effect.$()",
     "pages.remilia.remilia.dynamic.title": "Dynamic Macro",
-    "pages.remilia.remilia.dynamic.text": "This entry has two macros from Remilia. However unlike the previous entry, these change color. The first is 'rainbowClient' and changes color every client tick while the second is 'discoServer' and changes color every one second, but the order to change said color is given by the server. Colors refresh when you re-open the book.$(br2)$(rainbowClient)Test one.$()"
+    "pages.remilia.remilia.dynamic.text": "This entry has two macros from Remilia. However unlike the previous entry, these change color. The first is 'rainbowClient' and changes color every client tick while the second is 'discoServer' and changes color every one second, but the order to change said color is given by the server. Colors refresh when you re-open the book.$(br)$(rainbowClient)rainbowClient.$() $(discoServer)discoServer.$()"
 }

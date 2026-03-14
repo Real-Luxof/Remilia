@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
@@ -23,7 +24,7 @@ public class MinecraftClientMixin {
     private HashMap<UUID, HashMap<String, Object>> prevShared = new HashMap<>();
 
     @Inject(method = "tick", at = @At("HEAD"))
-    private void remilia$shareVarsOnClient() {
+    private void remilia$shareVarsOnClient(CallbackInfo ci) {
         Remilia.shareVars(
             prevShared,
             (uuid, id, packet) -> LOGGER.error("Client just tried to sync a variable to NON-NULL UUID " + uuid.toString() + ". What are you doing?"),

@@ -27,7 +27,7 @@ public class Remilia implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Not the bees? Why not?");
+		LOGGER.info("Not the bees? What did they ever do to you?");
 
 		RemiliaLoader.registerServer();
 
@@ -35,6 +35,8 @@ public class Remilia implements ModInitializer {
 			"remilia:devenv",
 			FabricLoader.getInstance().isDevelopmentEnvironment()
 		);
+
+        RemiliaLoader.registerServer();
 	}
 
 	public static Identifier id(String name) { return new Identifier(MOD_ID, name); }

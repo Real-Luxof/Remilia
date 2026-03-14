@@ -1,6 +1,7 @@
 package com.luxof.remilia;
 
 import static com.luxof.remilia.Remilia.LOGGER;
+import static com.luxof.remilia.Remilia.id;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -10,12 +11,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 
 import vazkii.patchouli.common.book.Book;
@@ -23,7 +25,7 @@ import vazkii.patchouli.common.book.BookRegistry;
 
 // I saw what Patchouli did...
 // I don't trust it.
-public class RemiliaLoader {
+public class RemiliaLoader implements SimpleSynchronousResourceReloadListener {
     public static boolean loadedAlready = false;
 
     private static void err(String mod, String reason) {
@@ -33,7 +35,13 @@ public class RemiliaLoader {
         LOGGER.error("Remilia errored parsing book.json belonging to " + mod, t);
     }
 
-    public static void reload(ResourceManager manager, boolean client) {
+    @Override
+    public Identifier getFabricId() {
+        return id("remilia_loader");
+    }
+
+    @Override
+    public void reload(ResourceManager manager) {
         if (loadedAlready) return;
         LOGGER.info("Remilia loading...");
 
@@ -91,14 +99,14 @@ public class RemiliaLoader {
     }
 
     public static void registerClient() {
-        ClientPlayConnectionEvents.INIT.register(
-            (networkHandler, client) -> reload(client.getResourceManager(), true)
+        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(
+            new RemiliaLoader()
         );
     }
 
     public static void registerServer() {
-        ServerPlayConnectionEvents.INIT.register(
-            (networkHandler, server) -> reload(server.getResourceManager(), false)
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
+            new RemiliaLoader()
         );
     }
 }

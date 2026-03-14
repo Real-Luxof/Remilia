@@ -34,7 +34,7 @@ public class ClientWorldMixin {
 
         RemiliaAPI.Macros.put(
             "$(rainbowClient)",
-            "$(" + pad((hex(macro) + 127) % 0xffffff) + ")"
+            "$(#" + pad((hex(macro) + 127) % 0xfffff) + ")"
         );
     }
 }

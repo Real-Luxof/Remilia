@@ -28,13 +28,13 @@ public class ServerWorldMixin {
         "$(#ffffff)"
     };
     @Inject(method = "tick", at = @At("HEAD"))
-    public void remilia$disoServer(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+    public void remilia$discoServer(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         if (timer < 20) {
             timer++;
             return;
         }
         timer = 0;
-        coloridx++;
+        coloridx = (coloridx + 1) % colors.length;
         RemiliaAPI.Macros.put("$(discoServer)", colors[coloridx]);
     }
 }
