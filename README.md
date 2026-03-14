@@ -18,3 +18,4 @@ WIP.
     - or only not gray out whitelisted mods.
     - probably also give +999 sort prio to grayed out mods (changeable in config)
 - Hook to generate limitless categories, entries, or pages in a specific format. :x:
+- Real-time macros (macros that update as the player is looking at them) :x:
