@@ -5,24 +5,27 @@ import static com.luxof.remilia.Remilia.LOGGER;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.jetbrains.annotations.NotNull;
 
-/** <p>Use after assets have been loaded (so ingame works but not your initializer). */
 public class RemiliaAPI {
     public final HashMap<String, String> macros;
+    public final HashMap<String, Function<String, String>> methodCallingMacros;
 
-    protected RemiliaAPI(HashMap<String, String> macros) { this.macros = macros; }
+    protected RemiliaAPI(
+        HashMap<String, String> macros,
+        HashMap<String, Function<String, String>> methodCallingMacros
+    ) { this.macros = macros; this.methodCallingMacros = methodCallingMacros; }
 
     protected static RemiliaAPI INSTANCE = null;
 
-    // this hooliganery is to keep stuff neatly organized
+    // this hooliganery is to keep stuff (as) neatly organized (as possible)
     /** contains methods to deal with setting or getting macros in the hex book.
-     * <p>any changed macros on the server sync to the client every server tick. */
+     * <p>any changed macros on the server sync to the client every server tick.
+     * <p>Use after assets have been loaded (so works in [SIDE]LifeCycleEvents.INIT). */
     public static class Macros {
-        /** directly puts the value of a macro in the book, on the client.
-         * Returns what was there before, or null if there was nothing there before. */
         public static String put(String key, @NotNull String value) {
             return RemiliaAPI.INSTANCE.macros.put(key, value);
         }
@@ -129,5 +132,23 @@ public class RemiliaAPI {
         public static Supplier<String> getString(UUID player, String name) { return get(player, name, String.class); }
         /** shorthand for null UUID. */ public static void shareString(String name, Supplier<Boolean> var) { put(null, name, var); }
         /** shorthand for null UUID. */ public static Supplier<String> getString(String name) { return getString(null, name); }
+    }
+
+    public static class MethodCallingMacros {
+        public static Function<String, String> put(
+            String key,
+            @NotNull Function<String, String> value
+        ) {
+            return RemiliaAPI.INSTANCE.methodCallingMacros.put(key, value);
+        }
+        public static HashMap<String, Function<String, String>> all() {
+            return RemiliaAPI.INSTANCE.methodCallingMacros;
+        }
+        public static boolean exists(String key) {
+            return RemiliaAPI.INSTANCE.methodCallingMacros.containsKey(key);
+        }
+        public static Function<String, String> get(String key) {
+            return RemiliaAPI.INSTANCE.methodCallingMacros.get(key);
+        }
     }
 }
