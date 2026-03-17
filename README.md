@@ -29,4 +29,6 @@ WIP.
 - Hook to generate limitless categories, entries, or pages in a specific format. :x:
     - players may write their own categories and entries??
     - player-written stuff is stored in PersistentState.
+- Easily extendible Patchoul entries. :x:
+- Hook to generate limitless categories, entries, or pages in a specific format. :x:
 - Markdown for Patchouli? :x:
