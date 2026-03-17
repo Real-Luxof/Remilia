@@ -5,6 +5,7 @@
 	"mixins": [
 		"MinecraftServerMixin",
 		"MinecraftClientMixin",
+		"BookTextParserAccessor",
 		"BookTextParserMixin"
 	],
 	"injectors": {

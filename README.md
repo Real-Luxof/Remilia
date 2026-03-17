@@ -11,7 +11,7 @@ WIP.
 - $(^N) clears the (N+1)-to-last command to cause an effect that's still in effect. :x:
     - Nullifies it.
     - Works only with non-method-calling macros.
-- Those tooltips can have color now.
+- Tooltips can have Patchouli formatting now.
 - Hotkey (ctrl + alt, perchance) to turn patterns into raw anglesig and startdir (in chat). :x:
 - Real-time macros (macros that update as the player is looking at them) :x:
 - Customizeable Patchouli font. :x:

@@ -2,7 +2,6 @@ package com.luxof.remilia.mixin;
 
 import com.luxof.remilia.RemiliaAPI;
 import com.luxof.remilia.cursed.JevilsMatcher;
-import com.luxof.remilia.minterfaces.BookParserStyler;
 
 import static com.luxof.remilia.Remilia.LOGGER;
 
@@ -11,16 +10,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import net.fabricmc.loader.api.FabricLoader;
+
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,7 +30,7 @@ import vazkii.patchouli.client.book.text.Span;
 import vazkii.patchouli.client.book.text.SpanState;
 
 @Mixin(value = BookTextParser.class, remap = false)
-public abstract class BookTextParserMixin implements BookParserStyler {
+public abstract class BookTextParserMixin {
     
     @Unique
     private List<Pair<String, String>> getTargets(
@@ -185,11 +182,6 @@ public abstract class BookTextParserMixin implements BookParserStyler {
         if (!processingTooltip) INSTANCE = (BookTextParser)(Object)this;
     }
 
-
-    @Shadow @Final @Mutable private Style baseStyle;
-    @Override @Unique public Style getBaseStyle() { return baseStyle; }
-    @Override @Unique public void setBaseStyle(Style newStyle) { baseStyle = newStyle; }
-
     @Unique private static String repeatNewlines(int times) {
         String ret = "";
         for (int i = 0; i < times; i++) { ret += "\n"; }
@@ -205,29 +197,68 @@ public abstract class BookTextParserMixin implements BookParserStyler {
         SpanState spanState,
         CallbackInfoReturnable<String> cir
     ) {
+        try {
         processingTooltip = true;
 
-        BookParserStyler styler = (BookParserStyler)INSTANCE;
-        Style prevStyle = styler.getBaseStyle();
-        // can't pass in null, ambiguous
-        styler.setBaseStyle(prevStyle.withColor(Style.EMPTY.getColor()));
+        BookTextParserAccessor accessor = (BookTextParserAccessor)INSTANCE;
+        BookTextParser parser = new BookTextParser(
+            accessor.remilia$getGui(),
+            accessor.remilia$getBook(),
+            accessor.remilia$getX(),
+            accessor.remilia$getY(),
+            //accessor.remilia$getWidth(),
+            10,
+            //accessor.remilia$getLineHeight(),
+            7,
+            // can't pass in null, ambiguous
+            accessor.remilia$getBaseStyle().withColor(Style.EMPTY.getColor())
+        );
 
-        List<Span> parseResult = INSTANCE.parse(spanState.tooltip);
+        List<Span> parseResult = parser.parse(spanState.tooltip);
         processingTooltip = false;
         MutableText trueTooltip = Text.literal("");
+
+        int charPos = 0;
+
         for (Span span : parseResult) {
+            MutableText spanText = Text.literal(repeatNewlines(span.lineBreaks));
+            if (span.lineBreaks > 0) charPos = 0;
 
-            MutableText toAppend = Text.literal(repeatNewlines(span.lineBreaks));
+            // just get done already...
+            // TODO: fix this cursed-looking shit if you can
+            // TODO: also make the wrap-around limit (currently 40) for stuff customizeable in config
+            String text = "";
+            int textLength = span.text.length();
+            int substringCharPos = 0;
 
-            toAppend.append(Text.literal(span.text)
-                .setStyle(span.style));
-            if (span.bold) toAppend.formatted(Formatting.BOLD);
+            while (substringCharPos < textLength) {
+                String substring = span.text.substring(
+                    substringCharPos,
+                    Math.min(textLength, Math.min(40 - charPos, substringCharPos + 40))
+                );
+                int substringLength = substring.length();
 
-            trueTooltip.append(toAppend);
+                if (40 - charPos == substringLength) {
+                    substring += "\n";
+                    charPos = 0;
+                } else {
+                    charPos += substringLength;
+                }
+                substringCharPos += substringLength;
+                text += substring;
+            }
+
+            spanText.append(Text.literal(text).setStyle(span.style));
+            if (span.bold) spanText.formatted(Formatting.BOLD);
+
+            trueTooltip.append(spanText);
         }
 
         spanState.tooltip = trueTooltip;
-        styler.setBaseStyle(prevStyle);
         processingTooltip = false;
+        } catch (Exception e) {
+            LOGGER.error("You fucked up.", e);
+            throw e;
+        }
     }
 }

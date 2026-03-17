@@ -27,7 +27,7 @@ public class Remilia implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Not the bees? What did they ever do to you?");
+		LOGGER.info("every day i wish patchi was good");
 
 		RemiliaLoader.registerServer();
 
