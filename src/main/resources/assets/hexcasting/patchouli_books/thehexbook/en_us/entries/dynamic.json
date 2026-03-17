@@ -1,0 +1,13 @@
+{
+    "name": "pages.remilia.remilia.dynamic.title",
+    "icon": "minecraft:amethyst_shard",
+    "category": "hexcasting:remilia",
+    "flag": "remilia:devenv",
+    "sortnum": 1,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "pages.remilia.remilia.dynamic.text"
+        }
+    ]
+}

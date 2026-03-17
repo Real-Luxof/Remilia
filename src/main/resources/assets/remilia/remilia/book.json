@@ -1,0 +1,10 @@
+{
+    "macros": {
+        "$(exampleblue)": "$(#0000ff)",
+        "$(rainbowClient)": "$(#000000)",
+        "$(discoServer)": "$(#000000)"
+    },
+    "method_calling_macros": {
+        "$(blue_red_gradient)": "com.luxof.remilia.MethodCallingMacros.blueRedGradient"
+    }
+}

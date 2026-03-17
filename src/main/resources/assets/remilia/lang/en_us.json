@@ -1,0 +1,19 @@
+{
+    "categories.remilia.example.title": "Remilia Ex.",
+    "categories.remilia.example.description": "Examples of Remilia functions. This category is only available in a development environment.",
+
+    "pages.remilia.remilia.static.title": "Static Macros",
+    "pages.remilia.remilia.static.text": "This is an example of a macro originating from Remilia which never changes: 'exampleblue'.$(br2)$(exampleblue)This is it in effect.$()",
+
+    "pages.remilia.remilia.dynamic.title": "Dynamic Macros",
+    "pages.remilia.remilia.dynamic.text": "This entry has two macros from Remilia. They are injected the normal way, but through the code they change. Here, 'rainbowClient' changes every client tick while 'discoServer' changes every twenty server ticks. Patchouli refreshes text for regular macros when you re-open the book.$(br)$(rainbowClient)rainbowClient.$() $(discoServer)discoServer.$()",
+
+    "pages.remilia.remilia.methodcalling.title": "Method Calling Macros",
+    "pages.remilia.remilia.methodcalling.text": "Method-calling macros are defined in the 'method_calling_macros' key of your modid/remilia/book.json. They work like normal macros, except they call a method (given in the macro key's value) to define their value and pass in a string (delimited by '$^(your macro here)', or it'll get the rest of the page) for the argument.",
+    "pages.remilia.remilia.methodcalling.example": "Remilia adds the 'blue_red_gradient' as a method-calling macro. Here it is in action:$(br2)$(blue_red_gradient)This text phases from blue to red.$^$(blue_red_gradient)",
+
+    "pages.remilia.remilia.patchouli_patches.title": "Patched-ouli",
+    "pages.remilia.remilia.patchouli_patches.yes": "This entry is for general things Remilia adds onto existing Patchouli features which may prove useful to you.",
+    "pages.remilia.remilia.patchouli_patches.tooltips.title": "Better tooltips",
+    "pages.remilia.remilia.patchouli_patches.tooltips.text": "Tooltips (the ones made by 'tooltip:argument' or 't:argument') can now have Patchouli formatting in them. The only caveat is that tooltips cannot contain other tooltips.$(br2)$(t:This is in a tooltip! And it has $(l)FORMATTING!$() $(exampleblue)Like, I can use the exampleblue macro here!$()$(br2)Or-$(br)-linebreaks!)$(thing)Example.$()"
+}

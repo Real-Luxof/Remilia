@@ -1,0 +1,18 @@
+{
+    "name": "pages.remilia.remilia.patchouli_patches.title",
+    "icon": "minecraft:lapis_lazuli",
+    "category": "hexcasting:remilia",
+    "flag": "remilia:devenv",
+    "sortnum": 3,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "pages.remilia.remilia.patchouli_patches.yes"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "pages.remilia.remilia.patchouli_patches.tooltips.title",
+            "text": "pages.remilia.remilia.patchouli_patches.tooltips.text"
+        }
+    ]
+}

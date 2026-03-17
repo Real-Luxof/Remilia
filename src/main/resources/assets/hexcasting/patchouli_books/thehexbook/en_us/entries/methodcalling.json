@@ -1,0 +1,17 @@
+{
+    "name": "pages.remilia.remilia.methodcalling.title",
+    "icon": "hexcasting:charged_amethyst",
+    "category": "hexcasting:remilia",
+    "flag": "remilia:devenv",
+    "sortnum": 2,
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "pages.remilia.remilia.methodcalling.text"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "pages.remilia.remilia.methodcalling.example"
+        }
+    ]
+}

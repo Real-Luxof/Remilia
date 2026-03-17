@@ -1,0 +1,7 @@
+{
+	"name": "categories.remilia.example.title",
+	"icon": "hexcasting:amethyst_dust",
+	"flag": "remilia:devenv",
+	"sortnum": 100,
+	"description": "categories.remilia.example.description"
+}
