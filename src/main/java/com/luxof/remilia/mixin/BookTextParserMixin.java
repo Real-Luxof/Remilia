@@ -235,16 +235,18 @@ public abstract class BookTextParserMixin {
             while (substringCharPos < textLength) {
                 String substring = span.text.substring(
                     substringCharPos,
-                    Math.min(textLength, Math.min(40 - charPos, substringCharPos + 40))
+                    Math.min(textLength, substringCharPos + 40 - charPos)
                 );
                 int substringLength = substring.length();
 
-                if (40 - charPos == substringLength) {
+                charPos += substringLength;
+                if (charPos >= 40) {
+                    if (charPos > 40)
+                        LOGGER.error("Remilia had an error wrapping around tooltip text. This is catastrophic.");
                     substring += "\n";
                     charPos = 0;
-                } else {
-                    charPos += substringLength;
                 }
+
                 substringCharPos += substringLength;
                 text += substring;
             }
