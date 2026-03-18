@@ -8,7 +8,6 @@ import static com.luxof.remilia.Remilia.LOGGER;
 
 import java.util.regex.MatchResult;
 
-import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 
 import org.spongepowered.asm.mixin.Mixin;

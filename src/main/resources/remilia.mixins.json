@@ -8,7 +8,8 @@
 		"BookTextParserAccessor",
 		"BookTextParserMixin",
 		"HexPatternMatcherMixin",
-		"MatchCacherMixin"
+		"MatchCacherMixin",
+		"InlineRenderCoreMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -3,6 +3,7 @@ package com.luxof.remilia.client;
 import com.luxof.remilia.RemiliaAPI;
 import com.luxof.remilia.RemiliaLoader;
 
+import static com.luxof.remilia.Remilia.LOGGER;
 import static com.luxof.remilia.Remilia.id;
 import static com.luxof.remilia.Remilia.readAndExecuteThisOnVars;
 
@@ -49,7 +50,9 @@ public class RemiliaClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (toggleDontRenderPatterns.wasPressed()) {
+                LOGGER.info("our key was pressed!");
                 dontRenderPatterns = !dontRenderPatterns;
+                LOGGER.info("dontRenderPatterns is now " + String.valueOf(dontRenderPatterns));
             }
         });
     }

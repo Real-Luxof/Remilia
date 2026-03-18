@@ -17,7 +17,9 @@ WIP.
     - tell the user about $(/c) cancelling tooltips and links too
     - tell the user about $(nocolor)
 - Tooltips can have Patchouli formatting now.
-- Hotkey (ctrl + alt, perchance) to turn patterns into raw anglesig and startdir (in text). :x:
+- Right Alt to turn patterns into raw startdir and anglesig. :x:
+    - works in all text (e.g. chat).
+    - works in the book.
 - Real-time macros (macros that update as the player is looking at them) :x:
 - Customizeable Patchouli font. :x:
 - Easily extendible Patchoul entries. :x:
