@@ -15,5 +15,7 @@
     "pages.remilia.remilia.patchouli_patches.title": "Patched-ouli",
     "pages.remilia.remilia.patchouli_patches.yes": "This entry is for general things Remilia adds onto existing Patchouli features which may prove useful to you.",
     "pages.remilia.remilia.patchouli_patches.tooltips.title": "Better tooltips",
-    "pages.remilia.remilia.patchouli_patches.tooltips.text": "Tooltips (the ones made by 'tooltip:argument' or 't:argument') can now have Patchouli formatting in them. The only caveat is that tooltips cannot contain other tooltips.$(br2)$(t:This is in a tooltip! And it has $(l)FORMATTING!$() $(exampleblue)Like, I can use the exampleblue macro here!$()$(br2)Or-$(br)-linebreaks!)$(thing)Example.$()"
+    "pages.remilia.remilia.patchouli_patches.tooltips.text": "Tooltips (the ones made by 'tooltip:argument' or 't:argument') can now have Patchouli formatting in them. The only caveat is that tooltips cannot contain other tooltips.$(br2)$(t:This is in a tooltip! And it has $(l)FORMATTING!$() $(exampleblue)Like, I can use the exampleblue macro here!$()$(br2)Or-$(br)-linebreaks!)$(thing)Example.$()",
+    "pages.remilia.remilia.patchouli_patches.cancelling.title": "Cancelling",
+    "pages.remilia.remilia.patchouli_patches.cancelling.text": "Most formatting changes ('bold', 'strike', 'obf', etc.) can all be cleared by prepending a '^' to their start (so '^l', '^strike', '^k' etc.), or the new '^r' command. As for tooltips, Patchouli's '/c' command already clears all tooltips and on-click events while 'nocolor' clears color.$(br2)$(exampleblue)$(o)Here it is $(^o)in $(l)action$(^r).$()"
 }

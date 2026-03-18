@@ -13,6 +13,11 @@
             "type": "patchouli:text",
             "title": "pages.remilia.remilia.patchouli_patches.tooltips.title",
             "text": "pages.remilia.remilia.patchouli_patches.tooltips.text"
+        },
+        {
+            "type": "patchouli:text",
+            "title": "pages.remilia.remilia.patchouli_patches.cancelling.title",
+            "text": "pages.remilia.remilia.patchouli_patches.cancelling.text"
         }
     ]
 }

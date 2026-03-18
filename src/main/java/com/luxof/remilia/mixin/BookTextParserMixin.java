@@ -18,6 +18,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.util.Pair;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import vazkii.patchouli.client.book.text.BookTextParser;
+import vazkii.patchouli.client.book.text.BookTextParser.CommandProcessor;
 import vazkii.patchouli.client.book.text.Span;
 import vazkii.patchouli.client.book.text.SpanState;
 
@@ -260,5 +262,24 @@ public abstract class BookTextParserMixin {
             LOGGER.error("You fucked up.", e);
             throw e;
         }
+    }
+
+    @Inject(
+        method = "<clinit>()V",
+        at = @At("HEAD")
+    )
+    private static void remilia$staticConstructor() {
+        BookTextParser.register(
+            state -> {
+                state.modifyStyle(s -> s.withFormatting(Formatting.RESET));
+                return "";
+            },
+            "^k", "^obf",
+            "^l", "^bold",
+            "^m", "^strike",
+            "^n", "^underline",
+            "^o", "^italic", "^italics",
+            "^r"
+        );
     }
 }

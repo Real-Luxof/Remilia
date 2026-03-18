@@ -8,11 +8,16 @@ WIP.
 - Macro injection into the Patchouli book.
 - Ancient Scrolls (or even just Scrolls) can be right-clicked to learn their stroke order in your book. (damn Miyu took that one)
 - Method-calling macros that give the given text as arguments to get back other text.
-- $(^N) clears the (N+1)-to-last command to cause an effect that's still in effect. :x:
-    - Nullifies it.
-    - Works only with non-method-calling macros.
+- Cancel codes
+    - $(^k) and $(^obf) cancel obfuscation
+    - $(^bold) and $(^l) cancel bold
+    - $(^m) and $(^strike) cancel strikethrough
+    - $(^n) and $(^underline) cancel underline
+    - $(^o), $(^italic), and $(^italics) cancel italics
+    - tell the user about $(/c) cancelling tooltips and links too
+    - tell the user about $(nocolor)
 - Tooltips can have Patchouli formatting now.
-- Hotkey (ctrl + alt, perchance) to turn patterns into raw anglesig and startdir (in chat). :x:
+- Hotkey (ctrl + alt, perchance) to turn patterns into raw anglesig and startdir (in text). :x:
 - Real-time macros (macros that update as the player is looking at them) :x:
 - Customizeable Patchouli font. :x:
 - Easily extendible Patchoul entries. :x:
@@ -26,9 +31,13 @@ WIP.
     - gray out categories/entries/pages of blacklisted mods
     - or only not gray out whitelisted mods.
     - probably also give +999 sort prio to grayed out mods (changeable in config)
-- Hook to generate limitless categories, entries, or pages in a specific format. :x:
+- Hook to generate limitless categories, entries, or pages. :x:
     - players may write their own categories and entries??
     - player-written stuff is stored in PersistentState.
-- Easily extendible Patchoul entries. :x:
-- Hook to generate limitless categories, entries, or pages in a specific format. :x:
+- Hook to DELETE categories, entries, or pages. :x:
+    - players may delete stuff too lmao
+    - does NOT break any extended entries because of indices getting fucked!
+        - this is because they are injected before the great deleting
+        - and their indices are in Identifiers, not numbers.
+        - but yeah if their entire group (entry/category) is gone they're gone too
 - Markdown for Patchouli? :x:
