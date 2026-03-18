@@ -6,7 +6,9 @@
 		"MinecraftServerMixin",
 		"MinecraftClientMixin",
 		"BookTextParserAccessor",
-		"BookTextParserMixin"
+		"BookTextParserMixin",
+		"HexPatternMatcherMixin",
+		"MatchCacherMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

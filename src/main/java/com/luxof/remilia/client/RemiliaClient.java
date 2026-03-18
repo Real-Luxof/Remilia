@@ -7,12 +7,28 @@ import static com.luxof.remilia.Remilia.id;
 import static com.luxof.remilia.Remilia.readAndExecuteThisOnVars;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 
 import static net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver;
 
 import java.util.HashMap;
 
+import org.lwjgl.glfw.GLFW;
+
 public class RemiliaClient implements ClientModInitializer {
+
+    public static boolean dontRenderPatterns = false;
+    public static KeyBinding toggleDontRenderPatterns = KeyBindingHelper.registerKeyBinding(
+        new KeyBinding(
+            "keys.remilia.togglepatternsrender",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_RIGHT_ALT,
+            "key_category.remilia"
+        )
+    );
 
     @Override
     public void onInitializeClient() {
@@ -30,6 +46,12 @@ public class RemiliaClient implements ClientModInitializer {
         );
 
         registerSharingPacketReceivers();
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (toggleDontRenderPatterns.wasPressed()) {
+                dontRenderPatterns = !dontRenderPatterns;
+            }
+        });
     }
 
     public void registerSharingPacketReceivers() {

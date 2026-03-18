@@ -1,4 +1,7 @@
 {
+    "key_category.remilia": "Remilia",
+    "keys.remilia.togglepatternsrender": "Toggle Inline Pattern Rendering",
+
     "categories.remilia.example.title": "Remilia Ex.",
     "categories.remilia.example.description": "Examples of Remilia functions. This category is only available in a development environment.",
 
