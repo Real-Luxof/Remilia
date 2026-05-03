@@ -3,14 +3,20 @@ package com.luxof.remilia;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.PlayerManager;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import org.apache.logging.log4j.util.TriConsumer;
@@ -24,6 +30,21 @@ public class Remilia implements ModInitializer {
 	public static final String MOD_ID = "remilia";
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    private static HashMap<String, String> prevMacros = new HashMap<>();
+    private static HashMap<UUID, HashMap<String, Object>> prevShared = new HashMap<>();
+
+    private static int timer = 0;
+    private static int coloridx = 0;
+    private static String[] colors = {
+            "$(#000000)",
+            "$(#ff0000)",
+            "$(#00ff00)",
+            "$(#0000ff)",
+            "$(#ffff00)",
+            "$(#00ffff)",
+            "$(#ff00ff)",
+            "$(#ffffff)"
+        };
 
 	@Override
 	public void onInitialize() {
@@ -37,6 +58,72 @@ public class Remilia implements ModInitializer {
 		);
 
         RemiliaServer.initializeServerSideStuff();
+
+        ServerTickEvents.START_SERVER_TICK.register(server -> {
+
+            List<Map.Entry<String, String>> changes = new ArrayList<>();
+            RemiliaAPI.Macros.all().entrySet().forEach(entry -> {
+                if (!entry.getValue().equals(prevMacros.get(entry.getKey())))
+                    changes.add(entry);
+            });
+
+            if (changes.size() == 0) return;
+            PacketByteBuf buf = PacketByteBufs.create();
+            buf.writeInt(changes.size());
+            changes.forEach(change -> {
+                buf.writeString(change.getKey());
+                buf.writeString(change.getValue());
+            });
+
+            PlayerManager playerManager = server.getPlayerManager();
+            playerManager.getPlayerList().forEach(
+                player -> ServerPlayNetworking.send(
+                    player,
+                    id("macro_order_from_server"),
+                    buf
+                )
+            );
+
+            
+            Remilia.shareVars(
+                prevShared,
+                (uuid, id, packet) -> {
+                    ServerPlayerEntity sp = playerManager.getPlayer(uuid);
+                    if (sp == null) return;
+
+                    ServerPlayNetworking.send(
+                        sp,
+                        id,
+                        packet
+                    );
+                },
+                (id, packet) -> {
+                    for (ServerPlayerEntity sp : playerManager.getPlayerList()) {
+                        ServerPlayNetworking.send(
+                            sp,
+                            id,
+                            packet
+                        );
+                    }
+                }
+            );
+        });
+        ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+            prevMacros.clear();
+            prevShared.clear();
+        });
+
+        if (!FabricLoader.getInstance().isDevelopmentEnvironment()) return;
+
+        ServerTickEvents.START_WORLD_TICK.register(world -> {
+            if (timer < 20) {
+                timer++;
+                return;
+            }
+            timer = 0;
+            coloridx = (coloridx + 1) % colors.length;
+            RemiliaAPI.Macros.put("$(discoServer)", colors[coloridx]);
+        });
 	}
 
 	public static Identifier id(String name) { return new Identifier(MOD_ID, name); }

@@ -1,5 +1,6 @@
 package com.luxof.remilia.client;
 
+import com.luxof.remilia.Remilia;
 import com.luxof.remilia.RemiliaAPI;
 import com.luxof.remilia.RemiliaLoader;
 
@@ -10,12 +11,15 @@ import static com.luxof.remilia.Remilia.readAndExecuteThisOnVars;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 
 import static net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -30,6 +34,7 @@ public class RemiliaClient implements ClientModInitializer {
             "key_category.remilia"
         )
     );
+    private static HashMap<UUID, HashMap<String, Object>> prevShared = new HashMap<>();
 
     @Override
     public void onInitializeClient() {
@@ -48,16 +53,33 @@ public class RemiliaClient implements ClientModInitializer {
 
         registerSharingPacketReceivers();
 
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (toggleDontRenderPatterns.wasPressed()) {
-                LOGGER.info("our key was pressed!");
-                dontRenderPatterns = !dontRenderPatterns;
-                LOGGER.info("dontRenderPatterns is now " + String.valueOf(dontRenderPatterns));
-            }
+        ClientTickEvents.START_CLIENT_TICK.register(client -> {
+            Remilia.shareVars(
+                prevShared,
+                (uuid, id, packet) -> LOGGER.error("CLIENT just tried to sync a variable to NON-NULL UUID " + uuid.toString() + ". What are you doing?"),
+                ClientPlayNetworking::send
+            );
+        });
+
+        if (!FabricLoader.getInstance().isDevelopmentEnvironment()) return;
+
+        ClientTickEvents.START_WORLD_TICK.register(world -> {
+            RemiliaAPI.Macros.put(
+                "$(rainbowClient)",
+                "$(#" + pad(world.getRandom().nextInt(0xffffff)) + ")"
+            );
         });
     }
 
-    public void registerSharingPacketReceivers() {
+    private static String pad(int code) {
+        String str = String.valueOf(Integer.toHexString(code));
+        while (str.length() < 6) {
+            str = "0" + str;
+        }
+        return str;
+    }
+
+    private static void registerSharingPacketReceivers() {
         registerGlobalReceiver(
             id("your_global_just_got_deleted_buddy"),
             (client, networkHandler, packet, sender) -> {

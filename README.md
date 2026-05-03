@@ -16,26 +16,39 @@ WIP.
     - $(^o), $(^italic), and $(^italics) cancel italics
     - tell the user about $(/c) cancelling tooltips and links too
     - tell the user about $(nocolor)
-- Tooltips can have Patchouli formatting now.
+- Patchouli's tooltips can have Patchouli formatting now.
+- The book can be held in the off-hand (or both hands) and still be read. (Like a map!) (Like Lavendar!) :x:
+- The book can be put on a lectern and still read. (Like a map on item frames, but on lecterns!) :x:
+	- pages that arent unlocked are gibberish
+	- Perhaps it's overthinking it, but I was always under the impression that the player-facing text in the hex book is a simplified abstraction of the actual notes and research a hexcaster would need to do. So while it might not literally be a different language, it'd be like trying to read a dense and highly technical research paper about a subject you don't understand. The words are there, but they might as well be meaningless absent of their context. And that'd be represented to the player as gibberish as a way to get across the idea of "I can't understand this"  
+		-Smol
+	- MAYBE allow scrolling pages in the Lectern.
 - Right Alt to turn patterns into raw startdir and anglesig. :x:
-    - works in all text (e.g. chat).
-    - works in the book.
-- Real-time macros (macros that update as the player is looking at them) :x:
-- Customizeable Patchouli font. :x:
-- Easily extendible Patchoul entries. :x:
-    - players may write their own pages.
-    - player-written stuff is stored in PersistentState.
-- Per-world pattern shapes for everyone? :x:
-- Better Patchouli search. :x:
-    - Prefix, suffix, regex, or rubber band.
-    - Search words, page titles, entries, or categories.
+    - works only on text in chat and in the book.
 - Sort by mods. :x:
     - gray out categories/entries/pages of blacklisted mods
     - or only not gray out whitelisted mods.
     - probably also give +999 sort prio to grayed out mods (changeable in config)
+- Whichever mod added errors to the book is loudly yelled about in chat and in logs. :x:
+    - the book isn't emptied either. only the error-ing parts are removed.
+- Real-time macros (macros that update as the player is looking at them) :x:
+- Entries constantly check their flags so they can update when the flags change
+	- Advancement-checking is a boolean option in remilia/book.json
+	- Both may be overriden by client config
+- On that note, add a good config menu!
+- Customizeable Patchouli font. :x:
+	- Per-page? Perhaps?
+- Easily extendible Patchoul entries. :x:
+    - players may write their own pages.
+    - player-written stuff is stored in PersistentState.
+- Easily export and import player-made book content. :x:
+- Per-world pattern shapes for everyone? :x:
+- Better Patchouli search. :x:
+    - Prefix, suffix, regex, or rubber band.
+    - Search words, page titles, entries, or categories.
 - Hook to generate limitless categories, entries, or pages. :x:
     - players may write their own categories and entries??
-    - player-written stuff is stored in PersistentState.
+    - also let that stuff be imported and exported too.
 - Hook to DELETE categories, entries, or pages. :x:
     - players may delete stuff too lmao
     - does NOT break any extended entries because of indices getting fucked!
